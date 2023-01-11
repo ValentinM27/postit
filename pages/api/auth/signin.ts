@@ -7,8 +7,6 @@ import { wrongMethod, serverError, forbidden } from "../defaultHandler";
 import clientPromise from "../../../lib/mongodb";
 // Bcrypt && conf
 import bcrypt from "bcrypt";
-const bcryptSaltRound = 10;
-// Validation
 import { User } from "../../model-ts";
 // JWT
 import jwt from "jsonwebtoken";
@@ -25,14 +23,14 @@ export default async function handler(
 ) {
   switch (req.method) {
     case "POST":
-      await signup(req, res);
+      signin(req, res);
       break;
     default:
       wrongMethod(res);
   }
 }
 
-async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
+async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
   const client = await clientPromise;
   const db = client.db("postit");
 
@@ -43,32 +41,27 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
     serverError(res, e);
   }
 
-  // Check if email unique
   const existingUser = await db
     .collection("users")
     .findOne({ email: req.body.email });
 
-  if (existingUser) {
-    forbidden(res, "This email is already used ");
+  console.log(existingUser);
+  if (!existingUser) {
+    forbidden(res, "Wrong credentials");
     return;
   }
-
-  // Hash password and create user
   bcrypt
-    .hash(req.body.password, bcryptSaltRound)
-    .then(async function (hash: string) {
-      const newUser = {
-        firstname: req.body?.firstname || "firstname",
-        lastname: req.body?.lastname || "lastname",
-        email: req.body.email,
-        password: hash,
-      };
-      let createdUser = await db.collection("users").insertOne(newUser);
+    .compare(req.body.password, existingUser.password)
+    .then((valid: boolean) => {
+      if (!valid) {
+        forbidden(res, "Wrong credentials");
+        return;
+      }
 
       res.status(200).json({
         message: "Connexion réussie",
-        _id: createdUser.insertedId,
-        token: jwt.sign({ userId: createdUser.insertedId }, JWT_SECRET, {
+        _id: existingUser._id,
+        token: jwt.sign({ userId: existingUser._id }, JWT_SECRET, {
           expiresIn: "12h",
         }),
       });

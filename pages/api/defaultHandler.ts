@@ -8,3 +8,7 @@ export function wrongMethod(res: NextApiResponse<any>) {
 export function serverError(res: NextApiResponse<any>, e: string | Error) {
   res.status(500).json(e);
 }
+
+export function forbidden(res: NextApiResponse<any>, e: string | Error) {
+  res.status(403).json({ error: e });
+}

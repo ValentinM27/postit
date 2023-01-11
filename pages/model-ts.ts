@@ -9,8 +9,8 @@ export interface user {
 }
 
 export const User = z.object({
-  firstname: z.string(),
-  lastname: z.string(),
+  firstname: z.string().optional(),
+  lastname: z.string().optional(),
   email: z.string(),
   password: z.string(),
 });
