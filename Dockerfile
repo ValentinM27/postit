@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
-# Install build tools and bcrypt dependencies
-RUN apk add --no-cache make gcc g++ python3
+# Install nodemon
+RUN npm install -g nodemon
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -12,9 +12,6 @@ COPY package*.json ./
 # Install dependancies
 RUN npm install
 
-# Rebuild bcrypt inside the container
-RUN npm rebuild bcrypt --build-from-source
-
 # Bundle app source
 COPY . .
 
@@ -22,4 +19,4 @@ COPY . .
 EXPOSE 3000
 
 # Run the app in development mode with hot reloading
-CMD [ "yarn", "dev" ]
+CMD ["nodemon", "--watch", ".", "--exec", "npm", "run", "dev"]

@@ -6,4 +6,5 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    command: yarn dev
+      - /usr/src/app/node_modules
+    command: ["nodemon", "--watch", ".", "--exec", "npm", "run", "dev"]
