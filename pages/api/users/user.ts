@@ -18,6 +18,6 @@ export default async function handler(
   }
 }
 
-async function getUser(req: NextApiRequest, res: NextApiResponse<user>) {
-  res.status(200).json((await isAuthentificated(req, res)) as user);
+async function getUser(req: NextApiRequest, res: NextApiResponse<any>) {
+  res.status(200).json(await isAuthentificated(req, res));
 }

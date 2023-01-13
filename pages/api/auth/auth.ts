@@ -52,7 +52,7 @@ export async function isAuthentificated(
       firstname: existingUser.firstname,
       lastname: existingUser.lastname,
       email: existingUser.email,
-    } as user;
+    };
   } catch (e: any | string) {
     serverError(res, e);
   }

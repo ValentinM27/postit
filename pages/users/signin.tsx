@@ -2,16 +2,10 @@ import { useState } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../model-ts";
 
-/**
- * Permet de créer un compte
- */
-const signup = () => {
+const signin = () => {
   const initValue = {
-    firstname: "",
-    lastname: "",
     email: "",
     password: "",
-    confirmPassword: "",
   };
   const [formValues, setFormValues] = useState(initValue);
   const [formErrors, setFormErrors] = useState({} as any);
@@ -38,14 +32,6 @@ const signup = () => {
     const errors: any = {};
     const mail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (!value.firstname) {
-      errors.firstname = "Enter your firstname";
-    }
-
-    if (!value.lastname) {
-      errors.lastname = "Enter your lastname";
-    }
-
     if (!value.email) {
       errors.email = "Mail is required";
     } else if (!mail_regex.test(value.email)) {
@@ -56,12 +42,6 @@ const signup = () => {
       errors.password = "Enter a password";
     } else if (value.password.length < 6 || value.password.length > 40) {
       errors.password = "Password should be between 6 and 40 caracters";
-    }
-
-    if (value.password && !value.confirmPassword) {
-      errors.password = "Confirm your password";
-    } else if (value.password !== value.confirmPassword) {
-      errors.confirmPassword = "Confirm your password";
     }
 
     if (Object.keys(errors).length === 0) {
@@ -76,7 +56,7 @@ const signup = () => {
    */
   const handleFetch = async () => {
     try {
-      let user = await UsersServices.signup(formValues as user);
+      let user = await UsersServices.signin(formValues as user);
     } catch (e: any) {
       setApiErrors(e.error);
     }
@@ -93,48 +73,9 @@ const signup = () => {
 
       <form onSubmit={handleSubmit}>
         <h2>
-          Sign Up to <span className="postit-span">Postit</span>
+          Login into <span className="postit-span">Postit</span>
         </h2>
-        <p>Please fill in this form to create an account!</p>
         <hr />
-        <div className="form-group">
-          <div className="row">
-            <div className="col-6">
-              <input
-                type="text"
-                className="form-control"
-                name="firstname"
-                value={formValues.firstname}
-                onChange={handleChange}
-                placeholder="First Name"
-                required={true}
-              />
-              {/* Gestion de l'affichage des erreurs */}
-              {formErrors.firstname ? (
-                <div className="alert alert-danger" role="alert">
-                  {formErrors.firstname}
-                </div>
-              ) : null}
-            </div>
-            <div className="col-6">
-              <input
-                type="text"
-                className="form-control"
-                name="lastname"
-                value={formValues.lastname}
-                onChange={handleChange}
-                placeholder="Last Name"
-                required={true}
-              />
-              {/* Gestion de l'affichage des erreurs */}
-              {formErrors.lastname ? (
-                <div className="alert alert-danger" role="alert">
-                  {formErrors.lastname}
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
         <div className="form-group">
           <input
             type="email"
@@ -169,40 +110,17 @@ const signup = () => {
             </div>
           ) : null}
         </div>
-        <div className="form-group">
-          <input
-            type="password"
-            className="form-control"
-            name="confirmPassword"
-            value={formValues.confirmPassword}
-            onChange={handleChange}
-            placeholder="Confirm Password"
-            required={true}
-          />
-          {/* Gestion de l'affichage des erreurs */}
-          {formErrors.confirmPassword ? (
-            <div className="alert alert-danger" role="alert">
-              {formErrors.confirmPassword}
-            </div>
-          ) : null}
-        </div>
-        <div className="form-group">
-          <label className="checkbox-inline">
-            <input type="checkbox" required={true} /> I accept the{" "}
-            <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a>
-          </label>
-        </div>
         <div className="form-group col-md-12 text-center">
           <button type="submit" className="btn btn-primary btn-lg">
-            Sign Up
+            Sign In
           </button>
         </div>
       </form>
       <div className="hint-text">
-        Already have an account? <a href="/users/signin">Login here</a>
+        You don't have an account? <a href="/users/signup">Sign Up here</a>
       </div>
     </div>
   );
 };
 
-export default signup;
+export default signin;
