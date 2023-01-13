@@ -2,11 +2,11 @@
 import type { NextApiResponse } from "next";
 
 export function wrongMethod(res: NextApiResponse<any>) {
-  res.status(403).json({ message: "Wrong method" });
+  res.status(403).json({ error: "Wrong method" });
 }
 
 export function serverError(res: NextApiResponse<any>, e: string | Error) {
-  res.status(500).json(e);
+  res.status(500).json({ error: e });
 }
 
 export function forbidden(res: NextApiResponse<any>, e: string | Error) {

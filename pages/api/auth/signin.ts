@@ -45,7 +45,6 @@ async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
     .collection("users")
     .findOne({ email: req.body.email });
 
-  console.log(existingUser);
   if (!existingUser) {
     forbidden(res, "Wrong credentials");
     return;
@@ -60,7 +59,12 @@ async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
 
       res.status(200).json({
         message: "Connexion réussie",
-        _id: existingUser._id,
+        user: {
+          _id: existingUser._id,
+          firstname: existingUser.firstname,
+          lastname: existingUser.lastname,
+          email: existingUser.email,
+        },
         token: jwt.sign({ userId: existingUser._id }, JWT_SECRET, {
           expiresIn: "12h",
         }),

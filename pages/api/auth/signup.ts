@@ -53,6 +53,14 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
     return;
   }
 
+  if (
+    req.body.password !== req.body.confirmPassword ||
+    !req.body.confirmPassword
+  ) {
+    forbidden(res, "Confirm your password");
+    return;
+  }
+
   // Hash password and create user
   bcrypt
     .hash(req.body.password, bcryptSaltRound)
@@ -67,7 +75,12 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
 
       res.status(200).json({
         message: "Connexion réussie",
-        _id: createdUser.insertedId,
+        user: {
+          _id: createdUser.insertedId,
+          firstname: newUser.firstname,
+          lastname: newUser.lastname,
+          email: newUser.email,
+        },
         token: jwt.sign({ userId: createdUser.insertedId }, JWT_SECRET, {
           expiresIn: "12h",
         }),
