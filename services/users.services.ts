@@ -2,6 +2,11 @@ import sendRequest from "./api.services";
 import { user } from "../pages/model-ts";
 
 class UsersServices {
+  getUser() {
+    const user = sessionStorage.getItem("user");
+    if (user) return JSON.parse(user);
+  }
+
   async signin(user: user) {
     const response = await sendRequest("/api/auth/signin", "POST", true, user);
 
@@ -11,8 +16,8 @@ class UsersServices {
     }
 
     const data = await response.json();
-    localStorage.setItem("token", data?.token);
-    localStorage.setItem("user", JSON.stringify(data?.user));
+    sessionStorage.setItem("token", data?.token);
+    sessionStorage.setItem("user", JSON.stringify(data?.user));
 
     return data.user as user;
   }
@@ -26,18 +31,26 @@ class UsersServices {
     }
 
     const data = await response.json();
-    localStorage.setItem("token", data?.token);
-    localStorage.setItem("user", JSON.stringify(data?.user));
+    sessionStorage.setItem("token", data?.token);
+    sessionStorage.setItem("user", JSON.stringify(data?.user));
 
     return data.user as user;
   }
 
-  logout() {}
+  logout() {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+  }
 
-  async isAuthentificated() {}
+  async isAuthentificated() {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem("token") !== null;
+    }
+    return false;
+  }
 
   getToken() {
-    return localStorage.getItem("token") || "";
+    return sessionStorage.getItem("token") || "";
   }
 }
 
