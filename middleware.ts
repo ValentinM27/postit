@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   if (
     !request.nextUrl.pathname.includes("/signin") &&
     !request.nextUrl.pathname.includes("/signup") &&
-    !UsersServices.isAuthentificated()
+    UsersServices.isAuthentificated()
   ) {
     return NextResponse.redirect(new URL("/users/signup", request.url));
   }

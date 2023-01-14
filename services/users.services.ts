@@ -42,7 +42,7 @@ class UsersServices {
     sessionStorage.removeItem("user");
   }
 
-  async isAuthentificated() {
+  isAuthentificated() {
     if (typeof window !== "undefined") {
       return sessionStorage.getItem("token") !== null;
     }
