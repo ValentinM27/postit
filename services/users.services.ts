@@ -43,10 +43,7 @@ class UsersServices {
   }
 
   isAuthentificated() {
-    if (typeof window !== "undefined") {
-      return sessionStorage.getItem("token") !== null;
-    }
-    return false;
+    return sessionStorage.getItem("token") !== null;
   }
 
   getToken() {

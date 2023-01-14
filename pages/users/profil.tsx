@@ -7,7 +7,7 @@ const Profil = () => {
 
   useEffect(() => {
     setUser(UsersServices.getUser());
-  });
+  }, []);
 
   return (
     <div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Nav } from "../components";
+import { RouteGuard } from "./routeGuard";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -15,8 +16,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div>
-      {showHeader && <Nav />}
-      <Component {...pageProps} />
+      <RouteGuard>
+        {showHeader && <Nav />}
+        <Component {...pageProps} />
+      </RouteGuard>
     </div>
   );
 }
