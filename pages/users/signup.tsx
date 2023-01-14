@@ -1,11 +1,14 @@
 import { useState } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../model-ts";
+import { useRouter } from "next/router";
 
 /**
  * Permet de créer un compte
  */
 const signup = () => {
+  const router = useRouter();
+
   const initValue = {
     firstname: "",
     lastname: "",
@@ -77,6 +80,7 @@ const signup = () => {
   const handleFetch = async () => {
     try {
       let user = await UsersServices.signup(formValues as user);
+      router.push("/");
     } catch (e: any) {
       setApiErrors(e.error);
     }

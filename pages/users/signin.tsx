@@ -1,8 +1,11 @@
 import { useState } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../model-ts";
+import { useRouter } from "next/router";
 
 const signin = () => {
+  const router = useRouter();
+
   const initValue = {
     email: "",
     password: "",
@@ -57,6 +60,7 @@ const signin = () => {
   const handleFetch = async () => {
     try {
       let user = await UsersServices.signin(formValues as user);
+      router.push("/");
     } catch (e: any) {
       setApiErrors(e.error);
     }

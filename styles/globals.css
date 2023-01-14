@@ -82,3 +82,42 @@ body {
 .postit-span {
   color: #e38c00;
 }
+
+.header {
+  background: #111;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+.left-header {
+  display: flex;
+  font-weight: bold;
+}
+
+.left-header a {
+  text-decoration: none;
+  font-size: 41px;
+  color: #e38c00;
+}
+
+.right-header {
+  align-items: center;
+  display: flex;
+}
+
+.right-header div {
+  margin: 10px;
+}
+
+.right-header a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.right-header a:hover {
+  color: #e38c00;
+  text-decoration: underline;
+}

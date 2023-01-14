@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../model-ts";
 
-const profil = () => {
+const Profil = () => {
   const [user, setUser] = useState({} as user);
 
   useEffect(() => {
@@ -11,9 +11,11 @@ const profil = () => {
 
   return (
     <div>
-      <h1>{user?.firstname}</h1>
+      <h1>
+        {user?.firstname} {user?.lastname}
+      </h1>
     </div>
   );
 };
 
-export default profil;
+export default Profil;
