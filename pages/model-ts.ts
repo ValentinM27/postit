@@ -10,7 +10,7 @@ export interface user {
 
 export const User = z.object({
   _id: z.string().optional(),
-  login: z.string(),
-  password: z.string(),
+  login: z.string().optional(),
+  password: z.string().optional(),
   confirmPassword: z.string().optional(),
 });

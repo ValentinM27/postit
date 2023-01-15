@@ -12,3 +12,7 @@ export function serverError(res: NextApiResponse<any>, e: string | Error) {
 export function forbidden(res: NextApiResponse<any>, e: string | Error) {
   res.status(403).json({ error: e });
 }
+
+export function succed(res: NextApiResponse<any>, e: string) {
+  res.status(200).json({ message: e });
+}

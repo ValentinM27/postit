@@ -11,7 +11,7 @@ export default async function sendRequest(
       method: method,
       headers: {
         "Content-Type": "application/json",
-        authorization: usersServices.getToken(),
+        authorization: "Bearer " + usersServices.getToken(),
       },
       body: JSON.stringify(body),
     });

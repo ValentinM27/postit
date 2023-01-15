@@ -8,7 +8,7 @@ class UsersServices {
   }
 
   async signin(user: user) {
-    const response = await sendRequest("/api/auth/signin", "POST", true, user);
+    const response = await sendRequest("/api/auth/signin", "POST", false, user);
 
     if (!response.ok) {
       const fail = await response.json();
@@ -23,7 +23,7 @@ class UsersServices {
   }
 
   async signup(user: user) {
-    const response = await sendRequest("/api/auth/signup", "POST", true, user);
+    const response = await sendRequest("/api/auth/signup", "POST", false, user);
 
     if (!response.ok) {
       const fail = await response.json();
@@ -48,6 +48,19 @@ class UsersServices {
 
   getToken() {
     return sessionStorage.getItem("token") || "";
+  }
+
+  async updatePassword(user: user) {
+    const response = await sendRequest("/api/users/user", "POST", true, user);
+
+    if (!response.ok) {
+      const fail = await response.json();
+      throw { error: fail.error };
+    }
+
+    const data = await response.json();
+
+    return data?.message;
   }
 }
 

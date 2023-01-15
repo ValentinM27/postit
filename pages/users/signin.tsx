@@ -46,8 +46,6 @@ const signin = () => {
       errors.password = "Password lenght should be between 6 and 40 caracters";
     }
 
-    console.log(errors);
-
     if (Object.keys(errors).length === 0) {
       handleFetch();
     }
