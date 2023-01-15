@@ -13,6 +13,7 @@ const signup = () => {
     login: "",
     password: "",
     confirmPassword: "",
+    checkbox: false,
   };
   const [formValues, setFormValues] = useState(initValue);
   const [formErrors, setFormErrors] = useState({} as any);
@@ -29,7 +30,7 @@ const signup = () => {
    */
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    setFormErrors(validate(formValues));
+    validate(formValues);
   };
 
   /**
@@ -39,7 +40,7 @@ const signup = () => {
     const errors: any = {};
 
     if (!value.login) {
-      errors.login = "Mail is required";
+      errors.login = "Login is required";
     } else if (value.login.length < 3 && value.login.length > 24) {
       errors.login = "Login lenght should be between 3 and 24 caracters";
     }
@@ -56,11 +57,15 @@ const signup = () => {
       errors.confirmPassword = "Confirm your password";
     }
 
+    if (!value.checkbox) {
+      errors.checkbox = "Please accept our terms and policies";
+    }
+
     if (Object.keys(errors).length === 0) {
       handleFetch();
     }
 
-    return errors;
+    setFormErrors(errors);
   };
 
   /**
@@ -100,11 +105,10 @@ const signup = () => {
             onChange={handleChange}
             placeholder="Login"
             autoComplete="username"
-            required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.login ? (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger mt-1" role="alert">
               {formErrors.login}
             </div>
           ) : null}
@@ -118,11 +122,10 @@ const signup = () => {
             onChange={handleChange}
             placeholder="Password"
             autoComplete="new-password"
-            required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.password ? (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger mt-1" role="alert">
               {formErrors.password}
             </div>
           ) : null}
@@ -136,19 +139,29 @@ const signup = () => {
             onChange={handleChange}
             placeholder="Confirm Password"
             autoComplete="new-password"
-            required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.confirmPassword ? (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger mt-1" role="alert">
               {formErrors.confirmPassword}
             </div>
           ) : null}
         </div>
         <div className="form-group">
           <label className="checkbox-inline">
-            <input type="checkbox" required={true} /> I accept the{" "}
-            <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a>
+            <input
+              type="checkbox"
+              checked={formValues.checkbox}
+              onChange={() => (formValues.checkbox = !formValues.checkbox)}
+            />{" "}
+            I accept the <a href="#">Terms of Use</a> &amp;{" "}
+            <a href="#">Privacy Policy</a>
+            {/* Gestion de l'affichage des erreurs */}
+            {formErrors.checkbox ? (
+              <div className="alert alert-danger mt-1" role="alert">
+                {formErrors.checkbox}
+              </div>
+            ) : null}
           </label>
         </div>
         <div className="form-group col-md-12 text-center">

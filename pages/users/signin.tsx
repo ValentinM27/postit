@@ -25,7 +25,7 @@ const signin = () => {
    */
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    setFormErrors(validate(formValues));
+    validate(formValues);
   };
 
   /**
@@ -33,7 +33,6 @@ const signin = () => {
    */
   const validate = async (value: any) => {
     const errors: any = {};
-    const mail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
     if (!value.login) {
       errors.login = "Login is required";
@@ -42,16 +41,18 @@ const signin = () => {
     }
 
     if (!value.password) {
-      errors.password = "Enter a password";
+      errors.password = "Enter your password";
     } else if (value.password.length < 6 || value.password.length > 40) {
       errors.password = "Password lenght should be between 6 and 40 caracters";
     }
+
+    console.log(errors);
 
     if (Object.keys(errors).length === 0) {
       handleFetch();
     }
 
-    return errors;
+    setFormErrors(errors);
   };
 
   /**
@@ -90,11 +91,10 @@ const signin = () => {
             onChange={handleChange}
             autoComplete="username"
             placeholder="login"
-            required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.login ? (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger mt-1" role="alert">
               {formErrors.login}
             </div>
           ) : null}
@@ -108,11 +108,11 @@ const signin = () => {
             onChange={handleChange}
             placeholder="Password"
             autoComplete="current-password"
-            required={true}
+            required={false}
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.password ? (
-            <div className="alert alert-danger" role="alert">
+            <div className="alert alert-danger mt-1" role="alert">
               {formErrors.password}
             </div>
           ) : null}
