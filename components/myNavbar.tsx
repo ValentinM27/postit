@@ -16,7 +16,7 @@ const myNavbar = () => {
       </div>
       <div className="right-header">
         <div>
-          <a href="/">Notes</a>
+          <a href="/">Archives</a>
         </div>
         |
         <div>

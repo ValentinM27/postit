@@ -18,7 +18,10 @@ const Home = () => {
     <>
       <Head>
         <title>The Archiver</title>
-        <meta name="description" content="Your reminder app" />
+        <meta
+          name="description"
+          content="The app to save and share your ebooks"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
