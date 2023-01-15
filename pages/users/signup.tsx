@@ -25,6 +25,10 @@ const signup = () => {
     setFormValues({ ...formValues, [name]: value });
   };
 
+  const handleChangeCheckbox = (event: any) => {
+    setFormValues({ ...formValues, checkbox: event.target.checked });
+  };
+
   /**
    * Permet de gérer l'envoi du formulaire
    */
@@ -152,7 +156,7 @@ const signup = () => {
             <input
               type="checkbox"
               checked={formValues.checkbox}
-              onChange={() => (formValues.checkbox = !formValues.checkbox)}
+              onChange={handleChangeCheckbox}
             />{" "}
             I accept the <a href="#">Terms of Use</a> &amp;{" "}
             <a href="#">Privacy Policy</a>
