@@ -10,9 +10,7 @@ const signup = () => {
   const router = useRouter();
 
   const initValue = {
-    firstname: "",
-    lastname: "",
-    email: "",
+    login: "",
     password: "",
     confirmPassword: "",
   };
@@ -39,26 +37,17 @@ const signup = () => {
    */
   const validate = async (value: any) => {
     const errors: any = {};
-    const mail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (!value.firstname) {
-      errors.firstname = "Enter your firstname";
-    }
-
-    if (!value.lastname) {
-      errors.lastname = "Enter your lastname";
-    }
-
-    if (!value.email) {
-      errors.email = "Mail is required";
-    } else if (!mail_regex.test(value.email)) {
-      errors.email = "Wrong mail structure";
+    if (!value.login) {
+      errors.login = "Mail is required";
+    } else if (value.login.length < 3 && value.login.length > 24) {
+      errors.login = "Login lenght should be between 3 and 24 caracters";
     }
 
     if (!value.password) {
       errors.password = "Enter a password";
     } else if (value.password.length < 6 || value.password.length > 40) {
-      errors.password = "Password should be between 6 and 40 caracters";
+      errors.password = "Password lenght should be between 6 and 40 caracters";
     }
 
     if (value.password && !value.confirmPassword) {
@@ -97,62 +86,26 @@ const signup = () => {
 
       <form onSubmit={handleSubmit}>
         <h2>
-          Sign Up to <span className="postit-span">Postit</span>
+          Sign Up to <br />
+          <span className="the-archiver-span">The Archiver</span>
         </h2>
         <p>Please fill in this form to create an account!</p>
         <hr />
         <div className="form-group">
-          <div className="row">
-            <div className="col-6">
-              <input
-                type="text"
-                className="form-control"
-                name="firstname"
-                value={formValues.firstname}
-                onChange={handleChange}
-                placeholder="First Name"
-                required={true}
-              />
-              {/* Gestion de l'affichage des erreurs */}
-              {formErrors.firstname ? (
-                <div className="alert alert-danger" role="alert">
-                  {formErrors.firstname}
-                </div>
-              ) : null}
-            </div>
-            <div className="col-6">
-              <input
-                type="text"
-                className="form-control"
-                name="lastname"
-                value={formValues.lastname}
-                onChange={handleChange}
-                placeholder="Last Name"
-                required={true}
-              />
-              {/* Gestion de l'affichage des erreurs */}
-              {formErrors.lastname ? (
-                <div className="alert alert-danger" role="alert">
-                  {formErrors.lastname}
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
-        <div className="form-group">
           <input
-            type="email"
+            type="text"
             className="form-control"
-            name="email"
-            value={formValues.email}
+            name="login"
+            value={formValues.login}
             onChange={handleChange}
-            placeholder="Email"
+            placeholder="Login"
+            autoComplete="username"
             required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
-          {formErrors.email ? (
+          {formErrors.login ? (
             <div className="alert alert-danger" role="alert">
-              {formErrors.email}
+              {formErrors.login}
             </div>
           ) : null}
         </div>
@@ -164,6 +117,7 @@ const signup = () => {
             value={formValues.password}
             onChange={handleChange}
             placeholder="Password"
+            autoComplete="new-password"
             required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
@@ -181,6 +135,7 @@ const signup = () => {
             value={formValues.confirmPassword}
             onChange={handleChange}
             placeholder="Confirm Password"
+            autoComplete="new-password"
             required={true}
           />
           {/* Gestion de l'affichage des erreurs */}

@@ -11,9 +11,7 @@ const Profil = () => {
 
   return (
     <div>
-      <h1>
-        {user?.firstname} {user?.lastname}
-      </h1>
+      <h1>{user?.login}</h1>
     </div>
   );
 };

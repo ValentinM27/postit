@@ -34,7 +34,7 @@ export default async function handler(
 
 async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
   const client = await clientPromise;
-  const db = client.db("postit");
+  const db = client.db("the_archiver");
 
   // Validate user data
   try {
@@ -43,13 +43,13 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
     serverError(res, e);
   }
 
-  // Check if email unique
+  // Check if login unique
   const existingUser = await db
     .collection("users")
-    .findOne({ email: req.body.email });
+    .findOne({ login: req.body.login });
 
   if (existingUser) {
-    forbidden(res, "This email is already used ");
+    forbidden(res, "This login is already used ");
     return;
   }
 
@@ -66,20 +66,16 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
     .hash(req.body.password, bcryptSaltRound)
     .then(async function (hash: string) {
       const newUser = {
-        firstname: req.body?.firstname || "firstname",
-        lastname: req.body?.lastname || "lastname",
-        email: req.body.email,
+        login: req.body.login,
         password: hash,
       };
       let createdUser = await db.collection("users").insertOne(newUser);
 
       res.status(200).json({
-        message: "Connexion réussie",
+        message: "Connection succed",
         user: {
           _id: createdUser.insertedId,
-          firstname: newUser.firstname,
-          lastname: newUser.lastname,
-          email: newUser.email,
+          login: newUser.login,
         },
         token: jwt.sign({ userId: createdUser.insertedId }, JWT_SECRET, {
           expiresIn: "12h",

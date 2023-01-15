@@ -7,7 +7,7 @@ const signin = () => {
   const router = useRouter();
 
   const initValue = {
-    email: "",
+    login: "",
     password: "",
   };
   const [formValues, setFormValues] = useState(initValue);
@@ -35,16 +35,16 @@ const signin = () => {
     const errors: any = {};
     const mail_regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
 
-    if (!value.email) {
-      errors.email = "Mail is required";
-    } else if (!mail_regex.test(value.email)) {
-      errors.email = "Wrong mail structure";
+    if (!value.login) {
+      errors.login = "Login is required";
+    } else if (value.password.login < 3 || value.password.login > 24) {
+      errors.login = "Login lenght should be between 3 and 24 caracters";
     }
 
     if (!value.password) {
       errors.password = "Enter a password";
     } else if (value.password.length < 6 || value.password.length > 40) {
-      errors.password = "Password should be between 6 and 40 caracters";
+      errors.password = "Password lenght should be between 6 and 40 caracters";
     }
 
     if (Object.keys(errors).length === 0) {
@@ -77,23 +77,25 @@ const signin = () => {
 
       <form onSubmit={handleSubmit}>
         <h2>
-          Login into <span className="postit-span">Postit</span>
+          Login into <br />
+          <span className="the-archiver-span">The Archiver</span>
         </h2>
         <hr />
         <div className="form-group">
           <input
-            type="email"
+            type="login"
             className="form-control"
-            name="email"
-            value={formValues.email}
+            name="login"
+            value={formValues.login}
             onChange={handleChange}
-            placeholder="Email"
+            autoComplete="username"
+            placeholder="login"
             required={true}
           />
           {/* Gestion de l'affichage des erreurs */}
-          {formErrors.email ? (
+          {formErrors.login ? (
             <div className="alert alert-danger" role="alert">
-              {formErrors.email}
+              {formErrors.login}
             </div>
           ) : null}
         </div>
@@ -105,6 +107,7 @@ const signin = () => {
             value={formValues.password}
             onChange={handleChange}
             placeholder="Password"
+            autoComplete="current-password"
             required={true}
           />
           {/* Gestion de l'affichage des erreurs */}

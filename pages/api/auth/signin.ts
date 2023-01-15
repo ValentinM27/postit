@@ -32,7 +32,7 @@ export default async function handler(
 
 async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
   const client = await clientPromise;
-  const db = client.db("postit");
+  const db = client.db("the_archiver");
 
   // Validate user data
   try {
@@ -43,7 +43,7 @@ async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
 
   const existingUser = await db
     .collection("users")
-    .findOne({ email: req.body.email });
+    .findOne({ login: req.body.login });
 
   if (!existingUser) {
     forbidden(res, "Wrong credentials");
@@ -58,12 +58,10 @@ async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
       }
 
       res.status(200).json({
-        message: "Connexion réussie",
+        message: "Connection succed",
         user: {
           _id: existingUser._id,
-          firstname: existingUser.firstname,
-          lastname: existingUser.lastname,
-          email: existingUser.email,
+          login: existingUser.login,
         },
         token: jwt.sign({ userId: existingUser._id }, JWT_SECRET, {
           expiresIn: "12h",

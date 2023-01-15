@@ -12,7 +12,7 @@ const myNavbar = () => {
   return (
     <nav className="header">
       <div className="left-header">
-        <a href="/">Postit</a>
+        <a href="/">The Archiver</a>
       </div>
       <div className="right-header">
         <div>

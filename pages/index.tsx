@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import usersServices from "../services/users.services";
+import { user } from "./model-ts";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Home = () => {
-  const [user, setUser] = useState({} as any);
+  const [user, setUser] = useState({} as user);
 
   useEffect(() => {
     // Perform localStorage action
@@ -16,15 +17,13 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>Postit</title>
+        <title>The Archiver</title>
         <meta name="description" content="Your reminder app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>
-          Bienvenue {user?.firstname} {user?.lastname}
-        </h1>
+        <h1>Bienvenue {user?.login}</h1>
       </main>
     </>
   );

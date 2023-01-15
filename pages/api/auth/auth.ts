@@ -35,7 +35,7 @@ export async function isAuthentificated(
 
     // Récupération de l'utilisateur en base
     const client = await clientPromise;
-    const db = client.db("postit");
+    const db = client.db("the_archiver");
     let ObjectId = require("mongodb").ObjectId;
 
     const existingUser = await db
@@ -49,9 +49,7 @@ export async function isAuthentificated(
 
     return {
       _id: existingUser._id,
-      firstname: existingUser.firstname,
-      lastname: existingUser.lastname,
-      email: existingUser.email,
+      login: existingUser.login,
     };
   } catch (e: any | string) {
     serverError(res, e);
