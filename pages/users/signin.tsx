@@ -116,7 +116,7 @@ const signin = () => {
           ) : null}
         </div>
         <div className="form-group col-md-12 text-center">
-          <button type="submit" className="btn btn-primary btn-lg">
+          <button type="submit" className="btn btn-dark btn-lg">
             Sign In
           </button>
         </div>
