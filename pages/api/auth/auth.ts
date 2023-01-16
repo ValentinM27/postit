@@ -3,7 +3,6 @@ import { serverError, forbidden } from "../defaultHandler";
 
 // Database
 import clientPromise from "../../../lib/mongodb";
-import { user } from "../../model-ts";
 
 // JWT conf
 const jwt = require("jsonwebtoken");

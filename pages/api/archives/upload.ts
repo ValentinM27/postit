@@ -1,6 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse, PageConfig } from "next";
-import { book, Book } from "../../model-ts";
+import { Book } from "../../model-ts";
+
+// Database
+import clientPromise from "../../../lib/mongodb";
 
 import { isAuthentificated } from "../auth/auth";
 import { wrongMethod, serverError, forbidden, succed } from "../defaultHandler";
@@ -40,13 +43,33 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
   });
 
   try {
+    const client = await clientPromise;
+    const db = client.db("the_archiver");
+    let ObjectId = require("mongodb").ObjectId;
+
+    // Validate data
+    try {
+      Book.parse(data.fields);
+    } catch (e: any) {
+      serverError(res, e);
+    }
+
+    // Save the book
     const bookFile = data.files.bookFile;
     const bookPath = bookFile.filepath;
     const pathToWriteBook =
       `public/books/` + Date.now() + bookFile.newFilename + ".epub";
     const book = await fs.readFile(bookPath);
     await fs.writeFile(pathToWriteBook, book);
-    //store path in DB
+
+    // Insert into the db
+    await db.collection("books").insertOne({
+      title: data.fields.title,
+      ownerId: new ObjectId(currentUser?._id),
+      filePath: pathToWriteBook,
+      shared: false,
+    });
+
     succed(res, "book uploaded!");
   } catch (error: any) {
     serverError(res, error);
