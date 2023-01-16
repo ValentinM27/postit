@@ -16,11 +16,14 @@ export const User = z.object({
 });
 
 export interface book {
-  title: string;
-  bookFile: File | undefined;
+  title?: string;
+  bookFile?: File | undefined;
+  uploadDate?: Date;
+  shared?: boolean;
 }
 
 export const Book = z.object({
   _id: z.string().optional(),
   title: z.string().optional(),
+  shared: z.boolean().optional(),
 });

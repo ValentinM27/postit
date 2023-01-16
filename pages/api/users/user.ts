@@ -56,7 +56,6 @@ async function updatePassword(req: NextApiRequest, res: NextApiResponse<any>) {
   bcrypt
     .hash(req.body.password, bcryptSaltRound)
     .then(async function (hash: string) {
-      console.log("toto");
       await db.collection("users").updateOne(
         { _id: currentUser?._id },
         {

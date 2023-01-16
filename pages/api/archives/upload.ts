@@ -52,6 +52,7 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
       Book.parse(data.fields);
     } catch (e: any) {
       serverError(res, e);
+      return;
     }
 
     // Save the book
@@ -67,6 +68,7 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
       title: data.fields.title,
       ownerId: new ObjectId(currentUser?._id),
       filePath: pathToWriteBook,
+      uploadDate: Date.now(),
       shared: false,
     });
 
