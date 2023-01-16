@@ -4,9 +4,20 @@ export default async function sendRequest(
   url: string,
   method: string,
   isAuth?: boolean,
-  body?: {}
+  body?: {} | FormData,
+  isFormData?: boolean
 ) {
   if (isAuth) {
+    if (isFormData && body instanceof FormData) {
+      return await fetch(url, {
+        method: method,
+        headers: {
+          authorization: "Bearer " + usersServices.getToken(),
+        },
+        body: body,
+      });
+    }
+
     return await fetch(url, {
       method: method,
       headers: {

@@ -9,3 +9,6 @@ start:
 
 stop:
 	-@docker-compose stop
+
+clear:
+	-@rm -r ./public/books/*.epub

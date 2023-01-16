@@ -1,6 +1,7 @@
 import { title } from "process";
 import { useState, useEffect } from "react";
 
+import BookServices from "../services/books.services";
 import { book } from "../pages/model-ts";
 
 const Uploader = () => {
@@ -13,6 +14,7 @@ const Uploader = () => {
   const [formErrors, setFormErrors] = useState({} as any);
 
   const [apiErrors, setApiErrors] = useState("");
+  const [apiSuccess, setApiSuccess] = useState("");
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
@@ -26,13 +28,6 @@ const Uploader = () => {
 
     setFormValues({ ...formValues, bookFile: fileList[0] });
   };
-
-  //   const upload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     if (bookFile) {
-  //       const formData = new FormData();
-  //       formData.append("image", bookFile, bookFile?.name);
-  //     }
-  //   };
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -58,10 +53,32 @@ const Uploader = () => {
     }
 
     if (Object.keys(errors).length === 0) {
-      console.log("all good");
+      handleFetch();
     }
 
     setFormErrors(errors);
+  };
+
+  const handleFetch = async () => {
+    try {
+      if (!formValues.bookFile) {
+        return;
+      }
+
+      // Construct form data
+      const formData = new FormData();
+      formData.append("title", formValues.title);
+      formData.append(
+        "bookFile",
+        formValues.bookFile,
+        formValues.bookFile.name
+      );
+
+      const message = await BookServices.uploadBook(formData);
+      setApiSuccess(message);
+    } catch (e: any) {
+      setApiErrors(e.error);
+    }
   };
 
   return (
@@ -70,6 +87,12 @@ const Uploader = () => {
       {apiErrors ? (
         <div className="alert alert-danger" role="alert">
           {apiErrors}
+        </div>
+      ) : null}
+      {/* Gestion de l'affichage des succes */}
+      {apiSuccess ? (
+        <div className="alert alert-success" role="alert">
+          {apiSuccess}
         </div>
       ) : null}
 
