@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Uploader } from "../../components/index";
+import booksServices from "../../services/books.services";
+import { Book } from "../../components/index";
 
 const Archive = () => {
   const [isUpload, setIsUpload] = useState(false);
+  const [booksRef, setBooksRef] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await booksServices.getBooksRef();
+      setBooksRef(data.booksRef);
+    };
+
+    fetchData().catch(console.error);
+  }, []);
+
   return (
     <div>
       {!isUpload && (
@@ -17,6 +30,11 @@ const Archive = () => {
         </div>
       )}
       {isUpload && <Uploader cancel={() => setIsUpload(false)} />}
+
+      {!isUpload &&
+        booksRef.map((bookRef: any) => {
+          return <Book key={bookRef?._id} book={bookRef} />;
+        })}
     </div>
   );
 };

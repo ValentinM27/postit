@@ -171,3 +171,19 @@ body {
     width: 100%;
   }
 }
+
+.card-container {
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+  width: 90%;
+  max-width: 390px;
+  margin: 30px auto;
+  background: #e2e2e2;
+}
+
+.card-container .btn:hover,
+.card-container .btn:focus {
+  background: #e38c00 !important;
+  outline: none;
+}

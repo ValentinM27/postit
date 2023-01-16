@@ -19,6 +19,19 @@ class BooksServices {
 
     return data.message;
   }
+
+  async getBooksRef() {
+    const response = await sendRequest("/api/archives", "GET", true);
+
+    if (!response.ok) {
+      const fail = await response.json();
+      throw { error: fail.error };
+    }
+
+    const data = await response.json();
+
+    return data;
+  }
 }
 
 export default new BooksServices();
