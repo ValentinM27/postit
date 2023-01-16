@@ -59,7 +59,7 @@ const myNavbar = () => {
       {(toggleMenu || largeur > 768) && (
         <div className="right-header">
           <div>
-            <a href="/">Archives</a>
+            <a href="/archives">Archives</a>
           </div>
           <div>
             <a href="/users/profil">Profil</a>

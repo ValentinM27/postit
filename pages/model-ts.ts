@@ -14,3 +14,13 @@ export const User = z.object({
   password: z.string().optional(),
   confirmPassword: z.string().optional(),
 });
+
+export interface book {
+  title: string;
+  bookFile: File | undefined;
+}
+
+export const Book = z.object({
+  _id: z.string().optional(),
+  title: z.string().optional(),
+});

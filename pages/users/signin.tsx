@@ -31,7 +31,7 @@ const signin = () => {
   /**
    * Permet de valider l'intégrités des données du formulaire
    */
-  const validate = async (value: any) => {
+  const validate = (value: any) => {
     const errors: any = {};
 
     if (!value.login) {
