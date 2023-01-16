@@ -1,8 +1,4 @@
-import { useState, useEffect } from "react";
-import UsersServices from "../../services/users.services";
-import { user } from "../model-ts";
-
-import Uploader from "../../components/uploader";
+import { Uploader } from "../../components/index";
 
 const Archive = () => {
   return (
