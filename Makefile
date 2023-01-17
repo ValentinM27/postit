@@ -11,4 +11,4 @@ stop:
 	-@docker-compose stop
 
 clear:
-	-@rm -r ./public/*.epub
+	-@rm -r ./uploads/*.epub
