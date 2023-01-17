@@ -18,6 +18,7 @@ export const User = z.object({
 export interface book {
   title?: string;
   bookFile?: File | undefined;
+  ownerId?: string;
   uploadDate?: Date;
   shared?: boolean;
 }
@@ -27,3 +28,12 @@ export const Book = z.object({
   title: z.string().optional(),
   shared: z.boolean().optional(),
 });
+
+export interface bookref {
+  _id?: string;
+  title?: string;
+  ownerId?: string;
+  filePath?: string;
+  uploadDate?: Date;
+  shared?: boolean;
+}

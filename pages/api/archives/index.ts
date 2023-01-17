@@ -6,7 +6,7 @@ import { book } from "../../model-ts";
 import clientPromise from "../../../lib/mongodb";
 
 import { isAuthentificated } from "../auth/auth";
-import { wrongMethod, serverError, forbidden, succed } from "../defaultHandler";
+import { wrongMethod, serverError } from "../defaultHandler";
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,7 +30,7 @@ async function getBooksRef(req: NextApiRequest, res: NextApiResponse<any>) {
     let ObjectId = require("mongodb").ObjectId;
 
     const booksRefArray = [] as book[];
-    const booksRef = await db
+    await db
       .collection("books")
       .find({ ownerId: new ObjectId(currentUser?._id) })
       .forEach(function (book) {

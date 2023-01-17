@@ -16,3 +16,7 @@ export function forbidden(res: NextApiResponse<any>, e: string | Error) {
 export function succed(res: NextApiResponse<any>, e: string) {
   res.status(200).json({ message: e });
 }
+
+export function notFound(res: NextApiResponse<any>, e: string) {
+  res.status(404).json({ message: e + " not found" });
+}

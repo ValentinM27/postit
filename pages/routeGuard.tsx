@@ -37,6 +37,12 @@ function RouteGuard({ children }: any) {
       });
     } else {
       setAuthorized(true);
+      if (["/"].includes(path)) {
+        router.push({
+          pathname: "/archives",
+        });
+        return;
+      }
     }
   }
 

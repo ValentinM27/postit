@@ -32,6 +32,25 @@ class BooksServices {
 
     return data;
   }
+
+  async getBook(bookId: string) {
+    try {
+      const response = await sendRequest(
+        `/api/archives/book?id=${bookId}`,
+        "GET",
+        true
+      );
+
+      if (response.ok) {
+        const book = await response.arrayBuffer();
+        return book;
+      } else {
+        throw { error: `Error downloading the book ${response.statusText}` };
+      }
+    } catch (error) {
+      throw { error: error };
+    }
+  }
 }
 
 export default new BooksServices();

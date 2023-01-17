@@ -105,7 +105,7 @@ const Profil = () => {
               onClick={() => {
                 setChangePassword(true);
               }}
-              className="btn btn-primary btn-lg"
+              className="btn btn-dark btn-lg"
             >
               Change your password
             </button>
