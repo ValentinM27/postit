@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { ReactReader, ReactReaderStyle } from "react-reader";
 
 function MyEbookReader(props: any) {
-  const [location, setLocation] = useState(null);
+  const [location, setLocation] = useState(0);
 
   const ownStyles = {
     ...ReactReaderStyle,
