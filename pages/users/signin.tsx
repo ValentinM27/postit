@@ -1,6 +1,6 @@
 import { useState } from "react";
 import UsersServices from "../../services/users.services";
-import { user } from "../model-ts";
+import { user } from "../api/model-ts";
 import { useRouter } from "next/router";
 
 const signin = () => {

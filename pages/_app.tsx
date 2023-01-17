@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Nav } from "../components";
-import { RouteGuard } from "./routeGuard";
+import { RouteGuard } from "../services/routeGuard";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

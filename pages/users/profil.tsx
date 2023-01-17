@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import UsersServices from "../../services/users.services";
-import { user } from "../model-ts";
+import { user } from "../api/model-ts";
 
 const Profil = () => {
   const [user, setUser] = useState({} as user);
@@ -159,7 +159,7 @@ const Profil = () => {
               ) : null}
             </div>
             <div className="form-group col-md-12 d-flex justify-content-around">
-              <button className="btn btn-primary btn-lg">Save</button>
+              <button className="btn btn-dark btn-lg">Save</button>
             </div>
           </div>
         )}

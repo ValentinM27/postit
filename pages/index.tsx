@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { Inter } from "@next/font/google";
 import usersServices from "../services/users.services";
-import { user } from "./model-ts";
+import { user } from "./api/model-ts";
 
 const inter = Inter({ subsets: ["latin"] });
 

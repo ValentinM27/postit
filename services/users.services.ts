@@ -1,5 +1,5 @@
 import sendRequest from "./api.services";
-import { user } from "../pages/model-ts";
+import { user } from "../pages/api/model-ts";
 
 class UsersServices {
   getUser() {

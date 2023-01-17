@@ -7,7 +7,7 @@ import { wrongMethod, serverError, forbidden } from "../defaultHandler";
 import clientPromise from "../../../lib/mongodb";
 // Bcrypt && conf
 import bcrypt from "bcrypt";
-import { User } from "../../model-ts";
+import { User } from "../model-ts";
 // JWT
 import jwt from "jsonwebtoken";
 

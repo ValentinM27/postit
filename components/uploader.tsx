@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import BookServices from "../services/books.services";
-import { book } from "../pages/model-ts";
+import { book } from "../pages/api/model-ts";
 
 const Uploader = (props: any) => {
   const initValue: book = {

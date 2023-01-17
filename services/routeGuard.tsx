@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import UsersServices from "../services/users.services";
+import UsersServices from "./users.services";
 
 export { RouteGuard };
 

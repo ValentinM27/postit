@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ReactReader, ReactReaderStyle } from "react-reader";
 
 function MyEbookReader(props: any) {

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse, PageConfig } from "next";
-import { Book } from "../../model-ts";
+import { Book } from "../model-ts";
 
 // Database
 import clientPromise from "../../../lib/mongodb";

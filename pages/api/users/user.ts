@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { user } from "../../model-ts";
+import { user } from "../model-ts";
 
 import { isAuthentificated } from "../auth/auth";
 import { wrongMethod, serverError, forbidden, succed } from "../defaultHandler";
@@ -10,7 +10,7 @@ import clientPromise from "../../../lib/mongodb";
 import bcrypt from "bcrypt";
 const bcryptSaltRound = 10;
 
-import { User } from "../../model-ts";
+import { User } from "../model-ts";
 
 export default async function handler(
   req: NextApiRequest,

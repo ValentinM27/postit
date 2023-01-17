@@ -9,7 +9,7 @@ import clientPromise from "../../../lib/mongodb";
 import bcrypt from "bcrypt";
 const bcryptSaltRound = 10;
 // Validation
-import { User } from "../../model-ts";
+import { User } from "../model-ts";
 // JWT
 import jwt from "jsonwebtoken";
 
