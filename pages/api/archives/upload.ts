@@ -59,7 +59,7 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
     const bookFile = data.files.bookFile;
     const bookPath = bookFile.filepath;
     const pathToWriteBook =
-      `public/books/` + Date.now() + bookFile.newFilename + ".epub";
+      `public/` + Date.now() + bookFile.newFilename + ".epub";
     const book = await fs.readFile(bookPath);
     await fs.writeFile(pathToWriteBook, book);
 
