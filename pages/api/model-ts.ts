@@ -33,7 +33,7 @@ export interface bookref {
   _id?: string;
   title?: string;
   ownerId?: string;
-  filePath?: string;
+  filename?: string;
   uploadDate?: Date;
   shared?: boolean;
 }

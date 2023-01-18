@@ -1,9 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { book } from "../model-ts";
-
 // Database
 import clientPromise from "../../../lib/mongodb";
+import { s3, bucketName, S3GetParams } from "../../../lib/s3config";
 
 import { isAuthentificated } from "../auth/auth";
 import {
@@ -54,12 +53,24 @@ const getBook = async (req: NextApiRequest, res: NextApiResponse<any>) => {
       return;
     }
 
-    // Transfer the book
-    const book = fs.readFileSync(bookRef?.filePath);
-    res.setHeader("Content-Type", "application/epub+zip");
-    res.setHeader("Content-Disposition", `attachment; filename=book.epub`);
+    // Retrieve from S3
+    const paramS3: S3GetParams = {
+      Bucket: bucketName,
+      Key: bookRef?.filename,
+    };
 
-    return res.status(200).send(book);
+    s3.getObject(paramS3, (err: any, data: any) => {
+      if (err) {
+        serverError(res, err);
+        return;
+      }
+
+      // Transfer the book
+      res.setHeader("Content-Type", "application/epub+zip");
+      res.setHeader("Content-Disposition", `attachment; filename=book.epub`);
+
+      return res.status(200).send(data.Body);
+    });
   } catch (error: any) {
     serverError(res, error);
   }

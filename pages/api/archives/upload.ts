@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse, PageConfig } from "next";
 import { Book } from "../model-ts";
 
 // Database
+import { s3, bucketName, S3UploadParams } from "../../../lib/s3config";
 import clientPromise from "../../../lib/mongodb";
 
 import { isAuthentificated } from "../auth/auth";
@@ -58,16 +59,30 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
     // Save the book
     const bookFile = data.files.bookFile;
     const bookPath = bookFile.filepath;
-    const pathToWriteBook =
-      `uploads/` + Date.now() + bookFile.newFilename + ".epub";
+    const filename = Date.now() + bookFile.newFilename + ".epub";
     const book = await fs.readFile(bookPath);
-    await fs.writeFile(pathToWriteBook, book);
+
+    // Save to S3
+    const buffer = Buffer.from(book);
+    const paramS3: S3UploadParams = {
+      Bucket: bucketName,
+      Key: filename,
+      Body: buffer,
+      ContentType: bookFile.mimetype,
+    };
+
+    s3.upload(paramS3, function (err: any, data: any) {
+      if (err) {
+        serverError(res, err);
+        return;
+      }
+    });
 
     // Insert into the db
     await db.collection("books").insertOne({
       title: data.fields.title,
       ownerId: new ObjectId(currentUser?._id),
-      filePath: pathToWriteBook,
+      filename: filename,
       uploadDate: Date.now(),
       shared: false,
     });
