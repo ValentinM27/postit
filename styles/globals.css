@@ -187,3 +187,16 @@ body {
   background: #e38c00 !important;
   outline: none;
 }
+
+.contracts a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #000;
+}
+
+.contracts .btn:hover,
+.contracts .btn:focus {
+  border-color: #e38c00;
+  background: #e38c00 !important;
+  outline: none;
+}

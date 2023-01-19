@@ -10,7 +10,9 @@ import { RouteGuard } from "../services/routeGuard";
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const showHeader =
-    router.pathname === "/users/signup" || router.pathname === "/users/signin"
+    router.pathname === "/users/signup" ||
+    router.pathname === "/users/signin" ||
+    router.pathname === "/contracts/terms"
       ? false
       : true;
 

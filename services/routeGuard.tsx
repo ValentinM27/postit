@@ -28,7 +28,7 @@ function RouteGuard({ children }: any) {
   }, []);
 
   function authCheck(url: string) {
-    const publicPaths = ["/users/signup", "/users/signin"];
+    const publicPaths = ["/users/signup", "/users/signin", "/contracts/terms"];
     const path = url.split("?")[0];
     if (!UsersServices.isAuthentificated() && !publicPaths.includes(path)) {
       setAuthorized(false);
