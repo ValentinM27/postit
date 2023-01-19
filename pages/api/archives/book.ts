@@ -10,9 +10,8 @@ import {
   serverError,
   notFound,
   forbidden,
+  succed,
 } from "../defaultHandler";
-
-import fs from "fs";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,6 +20,9 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       getBook(req, res);
+      break;
+    case "DELETE":
+      deleteBook(req, res);
       break;
     default:
       wrongMethod(res);
@@ -75,3 +77,51 @@ const getBook = async (req: NextApiRequest, res: NextApiResponse<any>) => {
     serverError(res, error);
   }
 };
+
+async function deleteBook(req: NextApiRequest, res: NextApiResponse<any>) {
+  const currentUser = await isAuthentificated(req, res);
+  const client = await clientPromise;
+  const db = client.db("the_archiver");
+
+  // Récupération des paramètres dans l'url de la requête
+  const { query } = req;
+  const { id } = query;
+
+  try {
+    let ObjectId = require("mongodb").ObjectId;
+
+    const bookRef = await db
+      .collection("books")
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!bookRef) {
+      notFound(res, "book");
+      return;
+    }
+
+    if (!bookRef?.ownerId.equals(new ObjectId(currentUser?._id))) {
+      forbidden(res, "Not allowed");
+      return;
+    }
+
+    // Delete from MongoDB
+    await db.collection("books").deleteOne({ _id: new ObjectId(bookRef._id) });
+
+    // Delete from S3
+    const paramS3: S3GetParams = {
+      Bucket: bucketName,
+      Key: bookRef?.filename,
+    };
+
+    s3.deleteObject(paramS3, (err: any, data: any) => {
+      if (err) {
+        serverError(res, err);
+        return;
+      }
+
+      succed(res, "book deleted");
+    });
+  } catch (error: any) {
+    serverError(res, error);
+  }
+}

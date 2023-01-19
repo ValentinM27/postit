@@ -9,13 +9,14 @@ const Archive = () => {
   const [currentBook, setCurrentBook] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await booksServices.getBooksRef();
-      setBooksRef(data.booksRef);
-    };
-
     fetchData().catch(console.error);
   }, []);
+
+  const fetchData = async () => {
+    const data = await booksServices.getBooksRef();
+    setBooksRef(data.booksRef);
+    setIsUpload(false);
+  };
 
   if (!currentBook) {
     return (
@@ -31,7 +32,9 @@ const Archive = () => {
             </button>
           </div>
         )}
-        {isUpload && <Uploader cancel={() => setIsUpload(false)} />}
+        {isUpload && (
+          <Uploader cancel={() => setIsUpload(false)} fetchBooks={fetchData} />
+        )}
 
         {!isUpload &&
           booksRef.map((bookRef: any) => {
@@ -40,6 +43,7 @@ const Archive = () => {
                 key={bookRef?._id}
                 book={bookRef}
                 readBook={(book: any) => setCurrentBook(book)}
+                fetchBooks={fetchData}
               />
             );
           })}

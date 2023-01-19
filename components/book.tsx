@@ -9,9 +9,18 @@ const book = (props: any) => {
     handleFetch(bookId);
   };
 
+  const handleDelete = (bookId: string) => {
+    handleFetchDelete(bookId);
+  };
+
   const handleFetch = async (bookId: string) => {
     const book: any = await booksServices.getBook(bookId);
     props?.readBook(book);
+  };
+
+  const handleFetchDelete = async (bookId: string) => {
+    await booksServices.deleteBook(bookId);
+    props?.fetchBooks();
   };
 
   return (
@@ -20,12 +29,18 @@ const book = (props: any) => {
       <h2>{props?.book?.title}</h2>
       <span>Book added the {getDate(props?.book?.uploadDate)}</span>
       <hr />
-      <div className="form-group col-md-12 text-center">
+      <div className="form-group col-md-12 d-flex justify-content-center">
         <button
           onClick={(event) => handleRead(props?.book?._id)}
-          className="btn btn-dark btn-lg"
+          className="btn btn-dark btn-lg m-2"
         >
           Read
+        </button>
+        <button
+          onClick={(event) => handleDelete(props?.book?._id)}
+          className="btn btn-danger btn-lg m-2"
+        >
+          Delete
         </button>
       </div>
     </div>
