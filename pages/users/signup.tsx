@@ -158,8 +158,7 @@ const signup = () => {
               checked={formValues.checkbox}
               onChange={handleChangeCheckbox}
             />{" "}
-            I accept the <a href="#">Terms of Use</a> &amp;{" "}
-            <a href="#">Privacy Policy</a>
+            I accept the <a href="/contracts/terms">Terms and Privacy Policy</a>{" "}
             {/* Gestion de l'affichage des erreurs */}
             {formErrors.checkbox ? (
               <div className="alert alert-danger mt-1" role="alert">
