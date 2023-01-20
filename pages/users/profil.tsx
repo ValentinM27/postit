@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../api/model-ts";
+import Router from "next/router";
 
 const Profil = () => {
   const [user, setUser] = useState({} as user);
@@ -14,6 +15,7 @@ const Profil = () => {
   const [formErrors, setFormErrors] = useState({} as any);
 
   const [changePassword, setChangePassword] = useState(false);
+  const [isDeleteAccount, setIsDeleteAccount] = useState(false);
 
   const [apiErrors, setApiErrors] = useState("");
   const [apiSuccess, setApiSuccess] = useState("");
@@ -54,6 +56,20 @@ const Profil = () => {
     }
 
     setFormErrors(errors);
+  };
+
+  const deleteAccount = () => {
+    if (!isDeleteAccount) {
+      setIsDeleteAccount(true);
+      return;
+    }
+
+    try {
+      UsersServices.deleteAccount();
+      Router.push("/users/signup");
+    } catch (error: any) {
+      setApiErrors(error);
+    }
   };
 
   /**
@@ -105,9 +121,17 @@ const Profil = () => {
               onClick={() => {
                 setChangePassword(true);
               }}
-              className="btn btn-dark btn-lg"
+              className="btn btn-dark btn-lg m-2"
             >
               Change your password
+            </button>
+            <button
+              onClick={() => {
+                deleteAccount();
+              }}
+              className="btn btn-danger btn-lg m-2"
+            >
+              {isDeleteAccount ? "Confimer" : "Delete your account"}
             </button>
           </div>
         )}
