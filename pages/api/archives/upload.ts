@@ -83,6 +83,7 @@ async function uploadBook(req: NextApiRequest, res: NextApiResponse<any>) {
       title: data.fields.title,
       ownerId: new ObjectId(currentUser?._id),
       filename: filename,
+      cover: data.fields.bookCover,
       uploadDate: Date.now(),
       shared: false,
     });

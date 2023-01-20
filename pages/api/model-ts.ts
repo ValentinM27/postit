@@ -18,6 +18,7 @@ export const User = z.object({
 export interface book {
   title?: string;
   bookFile?: File | undefined;
+  bookCover?: string | ArrayBuffer | null;
   ownerId?: string;
   uploadDate?: Date;
   shared?: boolean;
@@ -32,6 +33,7 @@ export const Book = z.object({
 export interface bookref {
   title?: string;
   ownerId?: string;
+  cover?: string;
   filename?: string;
   uploadDate?: Date;
   shared?: boolean;

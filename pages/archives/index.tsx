@@ -36,17 +36,20 @@ const Archive = () => {
           <Uploader cancel={() => setIsUpload(false)} fetchBooks={fetchData} />
         )}
 
-        {!isUpload &&
-          booksRef.map((bookRef: any) => {
-            return (
-              <Book
-                key={bookRef?._id}
-                book={bookRef}
-                readBook={(book: any) => setCurrentBook(book)}
-                fetchBooks={fetchData}
-              />
-            );
-          })}
+        {!isUpload && (
+          <div className="box-card">
+            {booksRef.map((bookRef: any) => {
+              return (
+                <Book
+                  key={bookRef?._id}
+                  book={bookRef}
+                  readBook={(book: any) => setCurrentBook(book)}
+                  fetchBooks={fetchData}
+                />
+              );
+            })}
+          </div>
+        )}
       </div>
     );
   } else {

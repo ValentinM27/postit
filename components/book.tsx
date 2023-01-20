@@ -24,12 +24,19 @@ const book = (props: any) => {
   };
 
   return (
-    <div className="card-container">
-      <div id="area"></div>
-      <h2>{props?.book?.title}</h2>
-      <span>Book added the {getDate(props?.book?.uploadDate)}</span>
-      <hr />
-      <div className="form-group col-md-12 d-flex justify-content-center">
+    <div
+      className="card-container"
+      style={{
+        background: `linear-gradient(to bottom, rgb(0,0,0,0.3), rgb(0,0,0,0.3)), url(${props?.book?.cover})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="title-container">
+        <h2>{props?.book?.title}</h2>
+        <span>Book added the {getDate(props?.book?.uploadDate)}</span>
+      </div>
+      <div className="btn-container col-12 d-flex justify-content-center">
         <button
           onClick={(event) => handleRead(props?.book?._id)}
           className="btn btn-dark btn-lg m-2"
