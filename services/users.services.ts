@@ -62,6 +62,19 @@ class UsersServices {
 
     return data?.message;
   }
+
+  async deleteAccount() {
+    const response = await sendRequest("/api/users/user", "DELETE", true);
+
+    if (!response.ok) {
+      const fail = await response.json();
+      throw { error: fail.error };
+    }
+
+    const data = await response.json();
+
+    return data?.message;
+  }
 }
 
 export default new UsersServices();

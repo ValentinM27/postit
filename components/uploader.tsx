@@ -75,6 +75,8 @@ const Uploader = (props: any) => {
 
       const message = await BookServices.uploadBook(formData);
       setApiSuccess(message);
+
+      props?.fetchBooks();
     } catch (e: any) {
       setApiErrors(e.error);
     }

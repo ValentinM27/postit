@@ -51,6 +51,27 @@ class BooksServices {
       throw { error: error };
     }
   }
+
+  async deleteBook(bookId: string) {
+    try {
+      const response = await sendRequest(
+        `/api/archives/book?id=${bookId}`,
+        "DELETE",
+        true
+      );
+
+      if (!response.ok) {
+        const fail = await response.json();
+        throw { error: fail.error };
+      }
+
+      const data = await response.json();
+
+      return data.message;
+    } catch (error) {
+      throw { error: error };
+    }
+  }
 }
 
 export default new BooksServices();

@@ -30,7 +30,6 @@ export const Book = z.object({
 });
 
 export interface bookref {
-  _id?: string;
   title?: string;
   ownerId?: string;
   filename?: string;
