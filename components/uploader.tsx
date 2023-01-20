@@ -3,12 +3,16 @@ import React, { useState } from "react";
 import BookServices from "../services/books.services";
 import { book } from "../pages/api/model-ts";
 
+import ePub from "epubjs";
+
 const Uploader = (props: any) => {
   const initValue: book = {
     title: "",
     bookFile: undefined,
+    bookCover: undefined,
   };
 
+  const [currentCover, setCurrentCover] = useState("");
   const [formValues, setFormValues] = useState<book>(initValue);
   const [formErrors, setFormErrors] = useState({} as any);
 
@@ -20,12 +24,43 @@ const Uploader = (props: any) => {
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const fileList = event.target.files;
 
     if (!fileList) return;
 
-    setFormValues({ ...formValues, bookFile: fileList[0] });
+    // Récupération de la couverture
+    const coverUrl = await ePub(await fileList[0].arrayBuffer()).coverUrl();
+    let tempBookCover: typeof formValues.bookCover = "";
+
+    if (coverUrl) {
+      setCurrentCover(coverUrl);
+
+      if (coverUrl) {
+        console.log(coverUrl);
+        const response = await fetch(coverUrl);
+
+        if (!response.ok) return;
+
+        const blob = await response.blob();
+
+        const reader = new FileReader();
+        await new Promise((resolve, reject) => {
+          reader.onloadend = resolve;
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+        tempBookCover = reader.result;
+      }
+    }
+
+    setFormValues({
+      ...formValues,
+      bookFile: fileList[0],
+      bookCover: tempBookCover,
+    });
   };
 
   const handleSubmit = (event: any) => {
@@ -67,6 +102,7 @@ const Uploader = (props: any) => {
       // Construct form data
       const formData = new FormData();
       formData.append("title", formValues.title || "");
+      formData.append("bookCover", formValues.bookCover || ("" as any));
       formData.append(
         "bookFile",
         formValues.bookFile,
@@ -120,6 +156,15 @@ const Uploader = (props: any) => {
             </div>
           ) : null}
         </div>
+        {currentCover && (
+          <div className="form-group">
+            <img
+              className="form-cover"
+              src={currentCover}
+              alt="Current book cover"
+            />
+          </div>
+        )}
         <div className="form-group">
           <input
             className="form-control"
