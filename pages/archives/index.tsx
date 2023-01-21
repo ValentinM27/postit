@@ -22,14 +22,16 @@ const Archive = () => {
     return (
       <div>
         {!isUpload && (
-          <div className="form-group mt-3 col-md-12 d-flex justify-content-between align-middle p-2">
-            <h2 className="font-weight-bold">Your books</h2>
-            <button
-              onClick={() => setIsUpload(true)}
-              className="btn flat btn-outline-warning btn-lg"
-            >
-              Upload
-            </button>
+          <div className="form-group archive-container">
+            <div className="d-flex justify-content-between">
+              <h2>Your books</h2>
+              <button
+                onClick={() => setIsUpload(true)}
+                className="btn flat btn-outline-warning btn-lg"
+              >
+                Upload
+              </button>
+            </div>
           </div>
         )}
         {isUpload && (
@@ -38,16 +40,18 @@ const Archive = () => {
 
         {!isUpload && (
           <div className="box-card">
-            {booksRef.map((bookRef: any) => {
-              return (
-                <Book
-                  key={bookRef?._id}
-                  book={bookRef}
-                  readBook={(book: any) => setCurrentBook(book)}
-                  fetchBooks={fetchData}
-                />
-              );
-            })}
+            {booksRef
+              .map((bookRef: any) => {
+                return (
+                  <Book
+                    key={bookRef?._id}
+                    book={bookRef}
+                    readBook={(book: any) => setCurrentBook(book)}
+                    fetchBooks={fetchData}
+                  />
+                );
+              })
+              .reverse()}
           </div>
         )}
       </div>
