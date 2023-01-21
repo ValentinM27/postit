@@ -232,7 +232,7 @@ body {
   margin: 0 auto;
   left: 0;
   right: 0;
-  top: 2em;
+  top: 5em;
 }
 
 .card-container .btn:hover,
@@ -252,4 +252,20 @@ body {
   border-color: #e38c00;
   background: #e38c00 !important;
   outline: none;
+}
+
+.archive-container {
+  width: 90%;
+  max-width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2em;
+}
+
+.archive-container h2 {
+  font-weight: bold;
+}
+
+.delete-btn-container {
+  float: right;
 }
