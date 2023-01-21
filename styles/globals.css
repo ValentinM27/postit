@@ -212,6 +212,14 @@ body {
   margin-right: auto;
 }
 
+@media (max-width: 925px) {
+  .card-container {
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 .card-container .btn-container {
   position: absolute;
   bottom: 2em;
