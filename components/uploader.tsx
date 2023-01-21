@@ -179,15 +179,15 @@ const Uploader = (props: any) => {
           ) : null}
         </div>
         <div className="form-group col-md-12 text-center">
+          <button onClick={handleSubmit} className="btn btn-dark btn-lg m-1">
+            Archive
+          </button>
           <button
             onClick={props.cancel}
             type="button"
             className="btn btn-outline-danger btn-lg m-1"
           >
             Cancel
-          </button>
-          <button onClick={handleSubmit} className="btn btn-dark btn-lg m-1">
-            Archive
           </button>
         </div>
       </form>

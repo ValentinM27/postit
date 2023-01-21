@@ -131,7 +131,7 @@ const Profil = () => {
               }}
               className="btn btn-danger btn-lg m-2"
             >
-              {isDeleteAccount ? "Confimer" : "Delete your account"}
+              {isDeleteAccount ? "You sure ?" : "Delete your account"}
             </button>
           </div>
         )}
