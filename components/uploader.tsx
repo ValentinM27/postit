@@ -39,7 +39,6 @@ const Uploader = (props: any) => {
       setCurrentCover(coverUrl);
 
       if (coverUrl) {
-        console.log(coverUrl);
         const response = await fetch(coverUrl);
 
         if (!response.ok) return;
@@ -72,9 +71,13 @@ const Uploader = (props: any) => {
     const errors: any = {};
     const maxSize = 2000;
 
-    if (!value.title) {
+    if (formValues?.bookCover === undefined && !value.title) {
       errors.title = "Title is required";
-    } else if (value.title.length < 3 && value.title.length > 40) {
+    } else if (
+      formValues?.bookCover === undefined &&
+      value.title.length < 3 &&
+      value.title.length > 40
+    ) {
       errors.title = "Title lenght should be between 3 and 40 caracters";
     }
 
@@ -132,7 +135,6 @@ const Uploader = (props: any) => {
           {apiSuccess}
         </div>
       ) : null}
-
       <form>
         <h2>
           Archive a book <br />
@@ -140,22 +142,24 @@ const Uploader = (props: any) => {
         </h2>
         Only .epub are allowed of maximum 2mo
         <hr />
-        <div className="form-group">
-          <input
-            className="form-control"
-            name="title"
-            type="text"
-            placeholder="Titre"
-            onChange={handleChange}
-            value={formValues.title}
-          />
-          {/* Gestion de l'affichage des erreurs */}
-          {formErrors.title ? (
-            <div className="alert alert-danger mt-1" role="alert">
-              {formErrors.title}
-            </div>
-          ) : null}
-        </div>
+        {formValues?.bookCover === undefined && (
+          <div className="form-group">
+            <input
+              className="form-control"
+              name="title"
+              type="text"
+              placeholder="Titre"
+              onChange={handleChange}
+              value={formValues.title}
+            />
+            {/* Gestion de l'affichage des erreurs */}
+            {formErrors.title ? (
+              <div className="alert alert-danger mt-1" role="alert">
+                {formErrors.title}
+              </div>
+            ) : null}
+          </div>
+        )}
         {currentCover && (
           <div className="form-group">
             <img
