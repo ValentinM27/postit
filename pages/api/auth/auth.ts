@@ -51,6 +51,6 @@ export async function isAuthentificated(
       login: existingUser.login,
     };
   } catch (e: any | string) {
-    serverError(res, e);
+    res.status(401).send(e);
   }
 }
