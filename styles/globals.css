@@ -140,6 +140,14 @@ body {
   color: #e38c00;
 }
 
+.left-header img {
+  border-radius: 5px;
+}
+
+.left-header span {
+  margin-left: 10px;
+}
+
 .right-header {
   align-items: center;
   display: flex;

@@ -36,8 +36,11 @@ const myNavbar = () => {
   return (
     <nav className="header navbar navbar-dark bg-dark">
       <div className="left-container-header d-flex justify-content-between">
-        <div className="left-header">
-          <a href="/">The Archiver</a>
+        <div className="left-header navbar-brand">
+          <a href="/">
+            <img width="40" height="40" alt="" src="/favicon.ico"></img>
+            <span>The Archiver</span>
+          </a>
         </div>
         {largeur <= 768 && (
           <div>
