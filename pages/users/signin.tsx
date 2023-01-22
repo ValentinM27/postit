@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../api/model-ts";
 import { useRouter } from "next/router";
@@ -14,6 +14,12 @@ const signin = () => {
   const [formErrors, setFormErrors] = useState({} as any);
 
   const [apiErrors, setApiErrors] = useState("");
+
+  useEffect(() => {
+    if (router.query.auth) {
+      setApiErrors("Your session has expired, please log in again");
+    }
+  }, []);
 
   const handleChange = (event: any) => {
     const { name, value } = event.target;
