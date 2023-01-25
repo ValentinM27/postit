@@ -13,6 +13,8 @@ import {
   succed,
 } from "../defaultHandler";
 
+import { Epubcfi } from "../model-ts";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
@@ -23,6 +25,9 @@ export default async function handler(
       break;
     case "DELETE":
       deleteBook(req, res);
+      break;
+    case "PUT":
+      updateEpubcfi(req, res);
       break;
     default:
       wrongMethod(res);
@@ -121,6 +126,56 @@ async function deleteBook(req: NextApiRequest, res: NextApiResponse<any>) {
 
       succed(res, "book deleted");
     });
+  } catch (error: any) {
+    serverError(res, error);
+  }
+}
+
+async function updateEpubcfi(req: NextApiRequest, res: NextApiResponse<any>) {
+  console.log("hello");
+  const currentUser = await isAuthentificated(req, res);
+  const client = await clientPromise;
+  const db = client.db("the_archiver");
+
+  // Récupération des paramètres dans l'url de la requête
+  const { query } = req;
+  const { id } = query;
+
+  try {
+    let ObjectId = require("mongodb").ObjectId;
+
+    // Validate book data
+    try {
+      Epubcfi.parse(req.body);
+    } catch (e: any) {
+      serverError(res, e);
+    }
+
+    const bookRef = await db
+      .collection("books")
+      .findOne({ _id: new ObjectId(id) });
+
+    if (!bookRef) {
+      notFound(res, "book");
+      return;
+    }
+
+    if (!bookRef?.ownerId.equals(new ObjectId(currentUser?._id))) {
+      forbidden(res, "Not allowed");
+      return;
+    }
+
+    // Update Epubcfi in mongo
+    await db.collection("books").updateOne(
+      { _id: new ObjectId(bookRef._id) },
+      {
+        $set: {
+          epubcfi: req?.body?.epubcfi,
+        },
+      }
+    );
+
+    succed(res, "epubcfi updated");
   } catch (error: any) {
     serverError(res, error);
   }

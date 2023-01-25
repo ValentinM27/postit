@@ -37,4 +37,9 @@ export interface bookref {
   filename?: string;
   uploadDate?: Date;
   shared?: boolean;
+  epubcfi?: string;
 }
+
+export const Epubcfi = z.object({
+  epubcfi: z.string(),
+});

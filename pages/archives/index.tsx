@@ -7,6 +7,7 @@ const Archive = () => {
   const [isUpload, setIsUpload] = useState(false);
   const [booksRef, setBooksRef] = useState<any[]>([]);
   const [currentBook, setCurrentBook] = useState(null);
+  const [currentBookRef, setCurrentBookRef] = useState(null);
 
   useEffect(() => {
     fetchData().catch(console.error);
@@ -46,7 +47,10 @@ const Archive = () => {
                   <Book
                     key={bookRef?._id}
                     book={bookRef}
-                    readBook={(book: any) => setCurrentBook(book)}
+                    readBook={(book: any, bookRef: any) => {
+                      setCurrentBook(book);
+                      setCurrentBookRef(bookRef);
+                    }}
                     fetchBooks={fetchData}
                   />
                 );
@@ -57,7 +61,13 @@ const Archive = () => {
       </div>
     );
   } else {
-    return <div>{currentBook && <MyEbookReader book={currentBook} />}</div>;
+    return (
+      <div>
+        {currentBook && currentBookRef && (
+          <MyEbookReader book={currentBook} bookRef={currentBookRef} />
+        )}
+      </div>
+    );
   }
 };
 

@@ -1,8 +1,17 @@
 import { useState } from "react";
 import { ReactReader, ReactReaderStyle } from "react-reader";
+import booksServices from "../services/books.services";
 
 function MyEbookReader(props: any) {
-  const [location, setLocation] = useState(0);
+  const [location, setLocation] = useState(props?.bookRef?.epubcfi || "0");
+
+  const epubOptions: any = {
+    disableSrcdoc: true,
+  };
+
+  const saveCurrentEpubcfi = async () => {
+    booksServices.saveCurrentEpubcfi(props?.bookRef?._id, location);
+  };
 
   const ownStyles = {
     ...ReactReaderStyle,
@@ -12,9 +21,9 @@ function MyEbookReader(props: any) {
     },
   };
 
-  const locationChanged = (epubcifi: any) => {
-    // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
-    setLocation(epubcifi);
+  const locationChanged = (epubcfi: any) => {
+    setLocation(epubcfi);
+    saveCurrentEpubcfi();
   };
 
   return (
@@ -24,6 +33,7 @@ function MyEbookReader(props: any) {
         locationChanged={locationChanged}
         url={props?.book}
         readerStyles={ownStyles}
+        epubOptions={epubOptions}
       />
     </div>
   );
