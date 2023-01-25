@@ -72,6 +72,26 @@ class BooksServices {
       throw { error: error };
     }
   }
+
+  async saveCurrentEpubcfi(bookId: string, epubcfi: any) {
+    try {
+      const response = await sendRequest(
+        `/api/archives/book?id=${bookId}`,
+        "PUT",
+        true,
+        {
+          epubcfi: epubcfi,
+        }
+      );
+
+      if (!response.ok) {
+        const fail = await response.json();
+        throw { error: fail.error };
+      }
+    } catch (error) {
+      throw { error: error };
+    }
+  }
 }
 
 export default new BooksServices();

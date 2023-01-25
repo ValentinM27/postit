@@ -15,7 +15,7 @@ const book = (props: any) => {
 
   const handleFetch = async (bookId: string) => {
     const book: any = await booksServices.getBook(bookId);
-    props?.readBook(book);
+    props?.readBook(book, props?.book);
   };
 
   const handleFetchDelete = async (bookId: string) => {
