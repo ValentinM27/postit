@@ -82,7 +82,7 @@ async function signup(req: NextApiRequest, res: NextApiResponse<any>) {
         }),
       });
     })
-    .catch((e: Error) => {
+    .catch((e: any) => {
       serverError(res, e);
     });
 }

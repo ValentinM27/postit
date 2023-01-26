@@ -68,7 +68,7 @@ async function signin(req: NextApiRequest, res: NextApiResponse<any>) {
         }),
       });
     })
-    .catch((e: Error) => {
+    .catch((e: any) => {
       serverError(res, e);
     });
 }
