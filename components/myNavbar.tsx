@@ -43,19 +43,19 @@ const myNavbar = () => {
           </a>
         </div>
         {largeur <= 768 && (
-          <div>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#navbarToggleExternalContent"
-              aria-controls="navbarToggleExternalContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-              onClick={toggleNavSmallScreen}
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
+          <div className="right-header">
+            <div>
+              <button
+                className="navbar-toggler navbar-toggler-icon"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarToggleExternalContent"
+                aria-controls="navbarToggleExternalContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+                onClick={toggleNavSmallScreen}
+              ></button>
+            </div>
           </div>
         )}
       </div>

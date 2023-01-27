@@ -41,21 +41,25 @@ const Archive = () => {
 
         {!isUpload && (
           <div className="box-card">
-            {booksRef
-              .map((bookRef: any) => {
-                return (
-                  <Book
-                    key={bookRef?._id}
-                    book={bookRef}
-                    readBook={(book: any, bookRef: any) => {
-                      setCurrentBook(book);
-                      setCurrentBookRef(bookRef);
-                    }}
-                    fetchBooks={fetchData}
-                  />
-                );
-              })
-              .reverse()}
+            {booksRef.length === 0 ? (
+              <div>Upload a book and it will be available here !</div>
+            ) : (
+              booksRef
+                .map((bookRef: any) => {
+                  return (
+                    <Book
+                      key={bookRef?._id}
+                      book={bookRef}
+                      readBook={(book: any, bookRef: any) => {
+                        setCurrentBook(book);
+                        setCurrentBookRef(bookRef);
+                      }}
+                      fetchBooks={fetchData}
+                    />
+                  );
+                })
+                .reverse()
+            )}
           </div>
         )}
       </div>
