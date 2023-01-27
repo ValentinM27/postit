@@ -2,6 +2,7 @@ import { useState } from "react";
 import UsersServices from "../../services/users.services";
 import { user } from "../api/model-ts";
 import { useRouter } from "next/router";
+import Loader from "../../components/loader";
 
 /**
  * Permet de créer un compte
@@ -17,6 +18,7 @@ const signup = () => {
   };
   const [formValues, setFormValues] = useState(initValue);
   const [formErrors, setFormErrors] = useState({} as any);
+  const [isWaitingApi, setIsWaitingApi] = useState(false);
 
   const [apiErrors, setApiErrors] = useState("");
 
@@ -77,9 +79,11 @@ const signup = () => {
    */
   const handleFetch = async () => {
     try {
-      let user = await UsersServices.signup(formValues as user);
+      setIsWaitingApi(true);
+      await UsersServices.signup(formValues as user);
       router.push("/");
     } catch (e: any) {
+      setIsWaitingApi(false);
       setApiErrors(e.error);
     }
   };
@@ -168,9 +172,13 @@ const signup = () => {
           </label>
         </div>
         <div className="form-group col-md-12 text-center">
-          <button type="submit" className="btn btn-dark btn-lg">
-            Sign Up
-          </button>
+          {isWaitingApi ? (
+            <Loader />
+          ) : (
+            <button type="submit" className="btn btn-dark btn-lg">
+              Sign Up
+            </button>
+          )}
         </div>
       </form>
       <div className="hint-text">

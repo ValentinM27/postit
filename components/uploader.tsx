@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import BookServices from "../services/books.services";
 import { book } from "../pages/api/model-ts";
+import Loader from "./loader";
 
 import ePub from "epubjs";
 
@@ -15,6 +16,7 @@ const Uploader = (props: any) => {
   const [currentCover, setCurrentCover] = useState("");
   const [formValues, setFormValues] = useState<book>(initValue);
   const [formErrors, setFormErrors] = useState({} as any);
+  const [isWaitingApi, setIsWaitingApi] = useState(false);
 
   const [apiErrors, setApiErrors] = useState("");
   const [apiSuccess, setApiSuccess] = useState("");
@@ -98,7 +100,9 @@ const Uploader = (props: any) => {
 
   const handleFetch = async () => {
     try {
+      setIsWaitingApi(true);
       if (!formValues.bookFile) {
+        setIsWaitingApi(false);
         return;
       }
 
@@ -114,9 +118,11 @@ const Uploader = (props: any) => {
 
       const message = await BookServices.uploadBook(formData);
       setApiSuccess(message);
+      setIsWaitingApi(false);
 
       props?.fetchBooks();
     } catch (e: any) {
+      setIsWaitingApi(false);
       setApiErrors(e.error);
     }
   };
@@ -183,16 +189,25 @@ const Uploader = (props: any) => {
           ) : null}
         </div>
         <div className="form-group col-md-12 text-center">
-          <button onClick={handleSubmit} className="btn btn-dark btn-lg m-1">
-            Archive
-          </button>
-          <button
-            onClick={props.cancel}
-            type="button"
-            className="btn btn-outline-danger btn-lg m-1"
-          >
-            Cancel
-          </button>
+          {isWaitingApi ? (
+            <Loader />
+          ) : (
+            <div>
+              <button
+                onClick={handleSubmit}
+                className="btn btn-dark btn-lg m-1"
+              >
+                Archive
+              </button>
+              <button
+                onClick={props.cancel}
+                type="button"
+                className="btn btn-outline-danger btn-lg m-1"
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </div>
       </form>
     </div>
