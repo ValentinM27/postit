@@ -33,7 +33,7 @@ const Uploader = (props: any) => {
 
     // Récupération de la couverture
     const coverUrl = await ePub(await fileList[0].arrayBuffer()).coverUrl();
-    let tempBookCover: typeof formValues.bookCover = "";
+    let tempBookCover: typeof formValues.bookCover = undefined;
 
     if (coverUrl) {
       setCurrentCover(coverUrl);
