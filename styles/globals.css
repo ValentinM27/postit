@@ -285,3 +285,13 @@ body {
 .delete-btn-container {
   float: right;
 }
+
+.center {
+  margin: auto;
+  width: fit-content;
+  padding: 70px;
+}
+
+.hide {
+  display: none;
+}
