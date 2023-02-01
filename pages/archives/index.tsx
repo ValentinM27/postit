@@ -44,7 +44,7 @@ const Archive = () => {
           <Uploader cancel={() => setIsUpload(false)} fetchBooks={fetchData} />
         )}
 
-        {isWaitingApi && (
+        {!isUpload && isWaitingApi && (
           <div className="center">
             <Loader />
           </div>
