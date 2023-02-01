@@ -295,3 +295,22 @@ body {
 .hide {
   display: none;
 }
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  text-align: center;
+  width: 100%;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.custom-file-upload:hover {
+  background: #e38c00;
+  font-weight: bold;
+  color: #f2f2f2;
+}
