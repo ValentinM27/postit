@@ -73,7 +73,7 @@ const Uploader = (props: any) => {
 
   const validate = (value: any) => {
     const errors: any = {};
-    const maxSize = 2000;
+    const maxSize = 5000;
 
     if (formValues?.bookCover === undefined && !value.title) {
       errors.title = "No cover found, you need to set a title";
@@ -90,7 +90,7 @@ const Uploader = (props: any) => {
     } else if (value.bookFile?.name.split(".").pop().toLowerCase() !== "epub") {
       errors.bookFile = "Only epub are supported";
     } else if (value.bookFile?.size / 1024 > maxSize) {
-      errors.bookFile = "File size exceed 2mo";
+      errors.bookFile = "File size exceed 5mo";
     }
 
     if (Object.keys(errors).length === 0) {
@@ -148,7 +148,7 @@ const Uploader = (props: any) => {
           Archive a book <br />
           <span className="the-archiver-span">The Archiver</span>
         </h2>
-        Only .epub are allowed of maximum 2mo
+        Only .epub are allowed of maximum 5mo
         <hr />
         {formValues?.bookFile !== undefined &&
           formValues?.bookCover === undefined && (
