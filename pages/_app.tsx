@@ -20,7 +20,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <div>
       <RouteGuard>
         {showHeader && <Nav />}
-        <Component {...pageProps} />
+        <div className="wrapper">
+          <Component {...pageProps} />
+        </div>
       </RouteGuard>
     </div>
   );
