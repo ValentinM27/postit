@@ -34,7 +34,7 @@ const myNavbar = () => {
   }, []);
 
   return (
-    <nav className="header navbar fixed-top navbar-dark bg-dark">
+    <nav className="header navbar navbar-dark bg-dark">
       <div className="left-container-header d-flex justify-content-between">
         <div className="left-header navbar-brand">
           <a href="/">
