@@ -98,7 +98,7 @@ const signin = () => {
             value={formValues.login}
             onChange={handleChange}
             autoComplete="username"
-            placeholder="login"
+            placeholder="Login"
           />
           {/* Gestion de l'affichage des erreurs */}
           {formErrors.login ? (
