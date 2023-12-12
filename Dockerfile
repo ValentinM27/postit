@@ -1,8 +1,5 @@
 FROM node:18-alpine
 
-# Install nodemon
-RUN npm install -g nodemon
-
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -15,8 +12,15 @@ RUN npm install
 # Bundle app source
 COPY . .
 
+# Set environment variable during build
+ARG BUCKET_NAME
+ENV BUCKET_NAME=${BUCKET_NAME}
+
+# Build the app
+RUN npm run build
+
 # Expose the app's port
 EXPOSE 3000
 
-# Run the app in development mode with hot reloading
-CMD ["nodemon", "--watch", ".", "--exec", "npm", "run", "dev"]
+# Run the app
+CMD [ "npm", "run", "start" ]
