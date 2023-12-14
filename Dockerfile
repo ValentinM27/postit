@@ -18,6 +18,12 @@ ENV NODE_ENV=production
 # Build the app
 RUN npm run build
 
+# TRAEFIK
+LABEL "traefik.enable"="true" \
+      "traefik.http.routers.thearchiver.rule"="Host(`archiver.valentinmarguerie.fr`)" \
+      "traefik.http.routers.thearchiver.entrypoints"="websecure" \
+      "traefik.http.services.thearchiver.loadbalancer.server.port"="3000"
+
 # Expose the app's port
 EXPOSE 3000
 
