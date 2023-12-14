@@ -35,4 +35,4 @@ jobs:
           script: |
             docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} ${{ secrets.REGISTRY_URL }}
             docker pull ${{ secrets.REGISTRY_URL }}/the-archiver:latest
-            docker rm -f the-archiver || true && docker run -d --network infra --name the-archiver ${{ secrets.REGISTRY_URL }}/the-archiver:latest
+            docker rm -f the-archiver || true && docker run -d --env-file ${{ secrets.ENV_FILE }} --network infra --name the-archiver ${{ secrets.REGISTRY_URL }}/the-archiver:latest

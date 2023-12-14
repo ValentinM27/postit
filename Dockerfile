@@ -12,9 +12,8 @@ RUN npm install
 # Bundle app source
 COPY . .
 
-# Set environment variable during build
-ARG BUCKET_NAME
-ENV BUCKET_NAME=${BUCKET_NAME}
+# Set environment variable
+ENV NODE_ENV=production
 
 # Build the app
 RUN npm run build
