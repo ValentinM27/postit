@@ -17,7 +17,7 @@ import { Epubcfi } from "../model-ts";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<any>
+  res: NextApiResponse<any>,
 ) {
   switch (req.method) {
     case "GET":
@@ -132,7 +132,6 @@ async function deleteBook(req: NextApiRequest, res: NextApiResponse<any>) {
 }
 
 async function updateEpubcfi(req: NextApiRequest, res: NextApiResponse<any>) {
-  console.log("hello");
   const currentUser = await isAuthentificated(req, res);
   const client = await clientPromise;
   const db = client.db("the_archiver");
@@ -172,7 +171,7 @@ async function updateEpubcfi(req: NextApiRequest, res: NextApiResponse<any>) {
         $set: {
           epubcfi: req?.body?.epubcfi,
         },
-      }
+      },
     );
 
     succed(res, "epubcfi updated");
